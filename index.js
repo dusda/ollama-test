@@ -1,8 +1,18 @@
 import { Ollama } from "ollama"
 import { toolsString, executeFunction } from "./tools"
 
+console.log(`Connecting to Ollama at ${process.env.OLLAMA_HOST}`)
+
 const ollama = new Ollama({
   host: process.env.OLLAMA_HOST,
+  fetch: (url, options = {}) => {
+    options.headers = {
+      ...options.headers,
+      Authorization: `Bearer ${process.env.OLLAMA_API_KEY}`
+    }
+    console.log(`Fetching ${url}, with options: ${JSON.stringify(options)}`)
+    return fetch(url, options)
+  }
 })
 
 const promptandanswer = async (prompt) => {
