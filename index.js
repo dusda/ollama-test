@@ -10,7 +10,6 @@ const ollama = new Ollama({
       ...options.headers,
       Authorization: `Bearer ${process.env.OLLAMA_API_KEY}`
     }
-    console.log(`Fetching ${url}, with options: ${JSON.stringify(options)}`)
     return fetch(url, options)
   }
 })
